@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+
+echo Ploter Start
+
+rm -rf static/*
+
+cd img2gcode
+
+raspistill -o output/tmp.jpg  -q 100 -h 2560 -w 2560
+
+echo Image Taken - Done
+
+./linedraw.py -i output/tmp.jpg -o output/tmp.svg -nh -b
+
+echo Image Processing - Done
+
+./svg2gcode.py -i output/tmp.svg
+
+
+echo Image to gcode - Done
+
+cd ..
+
+cp -a img2gcode/output/. static/
+
+echo Program End
+
